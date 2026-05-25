@@ -13,4 +13,4 @@
 http://127.0.0.1:8888
 ```
 
-脚本中的 `YOUR_INVITE_CODE` 是占位符。如不需要邀请码，可保持不变或自行修改。
+脚本默认使用 GLM Coding Plan 邀请码 `9GXWL9KCGZ`，用于折扣入口。

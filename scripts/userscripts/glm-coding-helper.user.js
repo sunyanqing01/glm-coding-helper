@@ -8,10 +8,6 @@
 // @match        https://bigmodel.cn/glm-coding*
 // @match        https://www.bigmodel.cn/glm-coding*
 // @include      https://*bigmodel.cn/html/rate-limit.html*
-// @include      https://platform.minimaxi.com/subscribe/token-plan*
-// @include      https://*volcengine.com*
-// @include      https://maas.xfyun.cn/packageSubscription*
-// @include      https://cloud.infini-ai.com*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=bigmodel.cn
 // @grant        GM_setValue
 // @grant        GM_getValue
@@ -34,33 +30,7 @@
  
     // ── 限流页立即跳回主页 ────────────────────────────────────────────────────
     if (location.href.includes('rate-limit.html')) {
-        location.replace('https://www.bigmodel.cn/glm-coding?ic=YOUR_INVITE_CODE&closedialog=true');
-        return;
-    }
- 
-    // ── 其他平台优惠检测 ──────────────────────────────────────────────────────
-    const PLATFORM_CHECKS = [
-        { host: 'platform.minimaxi.com', params: ['code'], name: 'MiniMax', code: 'YOUR_INVITE_CODE', url: 'https://platform.minimaxi.com/subscribe/token-plan?code=YOUR_INVITE_CODE&source=link' },
-        { host: 'volcengine.com', params: ['invite', 'inviteCode'], name: '字节方舟', code: 'YOUR_INVITE_CODE', url: 'https://volcengine.com/?invite=YOUR_INVITE_CODE' },
-        { host: 'maas.xfyun.cn', params: ['inviteCode'], name: '讯飞星辰', code: 'YOUR_INVITE_CODE', url: 'https://maas.xfyun.cn/packageSubscription?inviteCode=YOUR_INVITE_CODE' },
-        { host: 'cloud.infini-ai.com', params: ['invite_code'], name: '无问芯穹', code: 'YOUR_INVITE_CODE', url: 'https://cloud.infini-ai.com/login?redirect=/genstudio/invitation&invite_code=YOUR_INVITE_CODE' },
-    ];
- 
-    const currentPlatform = PLATFORM_CHECKS.find(p => location.hostname.includes(p.host));
-    if (currentPlatform) {
-        const urlParams = new URLSearchParams(location.search);
-        const hasCode = currentPlatform.params.some(param => urlParams.has(param));
- 
-        if (!hasCode && !sessionStorage.getItem('promo_dismissed_' + currentPlatform.name)) {
-            setTimeout(() => {
-                setBar(`⚠️ 未使用 ${currentPlatform.name} 优惠链接`, '#ff9800');
-                if (confirm(`智能检测到折扣渠道，是否使用优惠推广码 ${currentPlatform.code}？`)) {
-                    location.href = currentPlatform.url;
-                } else {
-                    sessionStorage.setItem('promo_dismissed_' + currentPlatform.name, '1');
-                }
-            }, 1500);
-        }
+        location.replace('https://www.bigmodel.cn/glm-coding?ic=9GXWL9KCGZ&closedialog=true');
         return;
     }
  
@@ -320,7 +290,7 @@
         if (!count) return;
         const n = parseInt(count);
         if (isNaN(n) || n < 1 || n > 10) { alert('请输入 1-10 之间的数字'); return; }
-        const baseUrl = 'https://www.bigmodel.cn/glm-coding?ic=YOUR_INVITE_CODE&closedialog=true';
+        const baseUrl = 'https://www.bigmodel.cn/glm-coding?ic=9GXWL9KCGZ&closedialog=true';
         for (let i = 0; i < n; i++) {
             setTimeout(() => {
                 const url = baseUrl + (i > 0 ? `&wi=${i}` : '');
@@ -534,32 +504,17 @@
  
     // ── 推广弹窗 ──────────────────────────────────────────────────────────────
     function triggerPromo() {
-        const PP = [
-            { name: 'MiniMax',   desc: '¥29起，赠视频/语音/音乐额度', color: '#4CAF50', url: 'https://platform.minimaxi.com/subscribe/token-plan?code=YOUR_INVITE_CODE&source=link' },
-            { name: '字节·方舟', desc: '首月低至¥8.9，多模型切换',    color: '#FF6B35', url: 'https://volcengine.com/L/YIeVPueJ2O4/' },
-            { name: '讯飞星辰',  desc: '¥19起，首月¥3.9最低门槛',    color: '#00BFFF', url: 'https://maas.xfyun.cn/packageSubscription?inviteCode=MAAS-C6BE3A3B' },
-            { name: '无问芯穹',  desc: '多模型聚合，首月¥19.9',       color: '#7B68EE', url: 'https://cloud.infini-ai.com/login?redirect=/genstudio/invitation&invite_code=IyveoKRS' },
-        ];
-        const rows = PP.map(p => `
-            <a href="${p.url}" target="_blank" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:8px;text-decoration:none;border:1px solid #eee;background:#fafafa" onmouseover="this.style.background='#f0f7ff'" onmouseout="this.style.background='#fafafa'">
-                <div style="display:flex;align-items:center;gap:10px">
-                    <span style="width:8px;height:8px;border-radius:50%;background:${p.color};display:inline-block"></span>
-                    <span style="font-weight:600;font-size:14px;color:#111">${p.name}</span>
-                    <span style="font-size:12px;color:#888">${p.desc}</span>
-                </div>
-                <span style="font-size:12px;color:${p.color};font-weight:500">立即开通 →</span>
-            </a>`).join('');
         const ov = document.createElement('div');
         ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2147483645;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(5px);font-family:system-ui,sans-serif';
         ov.innerHTML = `
-            <div style="background:#fff;width:520px;border-radius:16px;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);max-height:90vh;display:flex;flex-direction:column">
+            <div style="background:#fff;width:480px;border-radius:16px;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);max-height:90vh;display:flex;flex-direction:column">
                 <div style="background:linear-gradient(135deg,#1e3c72,#2a5298);padding:24px 24px 20px;color:#fff">
                     <h2 style="margin:0 0 6px;font-size:20px">GLM Coding Plan 全部售罄 🫠</h2>
                     <p style="margin:0;opacity:.85;font-size:14px">配置的所有套餐今日已售罄，补货后脚本将继续监控</p>
                 </div>
-                <div style="padding:16px 20px;overflow-y:auto;flex:1">
-                    <div style="font-size:13px;color:#888;margin-bottom:12px">👇 以下平台也有编程套餐和折扣链接</div>
-                    <div style="display:flex;flex-direction:column;gap:8px">${rows}</div>
+                <div style="padding:18px 20px;overflow-y:auto;flex:1;color:#333;font-size:14px;line-height:1.7">
+                    <div>脚本已停止当前轮次。你可以保持页面打开，等下一轮补货时重新启动。</div>
+                    <div style="margin-top:10px">当前 GLM Coding Plan 折扣入口邀请码：<b>9GXWL9KCGZ</b></div>
                 </div>
                 <div style="padding:14px 20px;border-top:1px solid #f0f0f0;text-align:right">
                     <button id="promo-x" style="background:none;border:1px solid #ddd;color:#888;padding:7px 18px;border-radius:6px;cursor:pointer;font-size:13px">关闭并停止脚本</button>
@@ -683,7 +638,7 @@
                     setBar('🔥 黄金时间！取消刷新，继续高频监控！', '#ff4d4f');
                     state = 'SCANNING'; qIdx = 0; sweepRestocks = [];
                 } else {
-                    location.replace('https://www.bigmodel.cn/glm-coding?ic=YOUR_INVITE_CODE&closedialog=true');
+                    location.replace('https://www.bigmodel.cn/glm-coding?ic=9GXWL9KCGZ&closedialog=true');
                 }
             } else {
                 setBar(`💤 休眠中，<b>${fmt(rem)}</b> 后刷新`, '#434343');
@@ -732,7 +687,7 @@
     function onSweepDone() {
         if (sweepBusyCount >= scanQueue.length) {
             setBar('⚡ 所有套餐系统繁忙(batch-preview 555)，刷新页面重试...', '#d46b08');
-            setTimeout(() => location.replace('https://www.bigmodel.cn/glm-coding?ic=YOUR_INVITE_CODE&closedialog=true'), 1500);
+            setTimeout(() => location.replace('https://www.bigmodel.cn/glm-coding?ic=9GXWL9KCGZ&closedialog=true'), 1500);
             return;
         }
         if (!sweepRestocks.length && isGoldenTime()) {
@@ -820,7 +775,7 @@
                         taskRLCount = 0; taskPhase = 'IDLE';
                     } else {
                         setBar(`🔁 连续 ${MAX_RL} 次限流，即将刷新...`, '#cf1322');
-                        setTimeout(() => location.replace('https://www.bigmodel.cn/glm-coding?ic=YOUR_INVITE_CODE&closedialog=true'), 50);
+                        setTimeout(() => location.replace('https://www.bigmodel.cn/glm-coding?ic=9GXWL9KCGZ&closedialog=true'), 50);
                     }
                     return;
                 }
@@ -1503,4 +1458,5 @@
     setInterval(checkCaptchaPrompt, 50);
     console.log('[captcha] bridge v2 started | rush=' + RUSH_CONFIG.enabled + ' | wi=' + getWindowIndex() + ' | target=10:' + String(RUSH_CONFIG.targetSec).padStart(2,'0') + '+' + (getWindowIndex() * RUSH_CONFIG.staggerMs / 1000) + 's');
 })();
+
 
