@@ -27,6 +27,8 @@ docs/backend_config.md
 
 ## 快速开始
 
+如果你想让 AI 助手代为安装和排错，可以把本仓库发给支持 Skills 的 AI 助手，并让它读取根目录 `SKILL.md`。
+
 ### 1. 安装后端
 
 如果你没有 Python，直接运行：
