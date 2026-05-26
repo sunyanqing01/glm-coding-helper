@@ -495,8 +495,15 @@ class CaptchaHandler(BaseHTTPRequestHandler):
                 action = data.get("action")
                 if action == "get":
                     self.send_json(200, {
+                        "auto_click": False,
+                        "rush_mode": False,
+                        "rush_target": "",
                         "results_count": len(state.recognition_results),
                     })
+                elif action == "set_auto_click":
+                    self.send_json(200, {"auto_click": False, "ignored": True})
+                elif action == "set_rush_mode":
+                    self.send_json(200, {"rush_mode": False, "target": "", "ignored": True})
                 else:
                     self.send_json(400, {"error": "unknown action"})
             else:
